@@ -4,6 +4,7 @@ This package implements the A2C (Actor Critic) Reinforcement Learning approach t
 It uses OpenAI Gym for the environments and Pytorch for the training process of the Neural network.
 
 ## Installation
+To run it, you must have a working GPU which runs with your operating system. 
 Create an environment with your favorite tool. (I use anaconda)
 
 ```
