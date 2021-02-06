@@ -4,6 +4,7 @@ This package implements the A2C (Actor Critic) Reinforcement Learning approach t
 It uses OpenAI Gym for the environments and Pytorch for the training process of the Neural network.
 
 ## Installation
+TODO
 
 ## Training
 To train, simply run the main file and let it train for aboud 1MM episodes. It should converge already after about 500K.
