@@ -1,3 +1,13 @@
+"""
+Main A2C implementation. A2C follows the original
+implementation of A3C but removes the asynchronous behavior.
+
+Each batch is calculated by running all environments at the same time
+and batching the data in a single batch for training.
+
+https://paperswithcode.com/paper/asynchronous-methods-for-deep-reinforcement
+https://towardsdatascience.com/understanding-actor-critic-methods-931b97b6df3f
+"""
 import time
 from collections import namedtuple
 from typing import Tuple, List

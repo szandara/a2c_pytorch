@@ -52,7 +52,7 @@ def main(arguments: argparse) -> None:
     """
     n_steps = arguments.steps
     n_agents = arguments.envs
-    
+
     print(f'Training {args.game}')
     print(f'Number of concurrent environments {args.envs}')
     print(f'Number of steps per batch {args.steps}')
