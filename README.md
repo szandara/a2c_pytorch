@@ -4,7 +4,7 @@ This package implements the A2C (Actor Critic) Reinforcement Learning approach t
 It uses OpenAI Gym for the environments and Pytorch for the training process of the Neural network.
 
 ## Installation
-create an environment with your favorite tool. (I use anaconda)
+Create an environment with your favorite tool. (I use anaconda)
 
 ```
 conda create -n a2c
@@ -13,6 +13,9 @@ conda install pip
 pip install -r requirements.txt
 pip install -e .
 ```
+
+Note: this will install some library which requires building and/or other system libraries which you might need to install manually (using apt)
+The code has been tested in an Ubuntu distribution running on Windows over WSL.
 
 ## Training
 To train, simply run the main file and let it train for aboud 1MM episodes. It should converge already after about 500K.
