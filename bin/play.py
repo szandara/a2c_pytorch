@@ -26,7 +26,7 @@ def main(arguments: argparse) -> None:
     Play the game
     :param arguments: User input
     """
-    print(f'Training {args.game}')
+    print(f'Playing {args.game}')
     env = wrap_deepmind(make_atari(env_id=arguments.game), frame_stack=True)
     agent = DeepLearningAgent(observation_space=env.observation_space,
                               action_space=int(env.action_space.n),
