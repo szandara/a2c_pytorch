@@ -4,7 +4,6 @@ This package implements the A2C (Actor Critic) Reinforcement Learning approach t
 It uses OpenAI Gym for the environments and Pytorch for the training process of the Neural network.
 
 ## Installation
-To run it, you must have a working GPU which runs with your operating system. 
 Create an environment with your favorite tool. (I use anaconda)
 
 ```
@@ -18,9 +17,11 @@ pip install -e .
 Note: this will install some library which requires building and/or other system libraries which you might need to install manually (using apt)
 The code has been tested in an Ubuntu distribution running on Windows over WSL.
 
+Note: It uses a port of OpenAI baselines from which I have extracted the wrap environments functionalities to avoid adding a dependency to tensorfow
+
 ## Training
 To train, simply run the main file and let it train for aboud 1MM episodes. It should converge already after about 500K.
-In my WSL environment it takes about 1 day using GPU.
+In my WSL environment it takes about 1 day using GPU (which is used by defaul)
 
 ```
 python main.py
