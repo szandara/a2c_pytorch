@@ -34,9 +34,9 @@ python main.py --model <PATH TO MODEL>
 ```
 
 ### Playing
-To see the behavior of your trained environent run, after training
+To see the behavior of your trained model run, after training
 
 ```
 python play.py
 ```
-Note: by default it uses saved_model.pytorch as policy
+Note: by default it uses saved_model.pytorch as model
