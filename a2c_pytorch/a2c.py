@@ -268,15 +268,14 @@ class DeepLearningAgent:
                 [2] Observation tensor
         """
         returns = last_values
-
-        out = [None] * (len(steps) - 1)
+        out = []
 
         # calculate the returns and stack the data per environment
-        for t in reversed(range(len(steps) - 1)):
+        for t in reversed(range(len(steps))):
             rewards, masks, actions, state = steps[t]
 
             returns = rewards + returns * self._gamma * masks
-            out[t] = actions, returns, state
+            out.append((actions, returns, state))
 
         # return data as batched Tensors
         actions, returns, state = map(lambda x: torch.cat(x, 0), zip(*out))
