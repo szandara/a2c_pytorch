@@ -26,13 +26,14 @@ def main(arguments: argparse) -> None:
     Play the game
     :param arguments: User input
     """
-    print(f'Playing {args.game}')
+    print(f'Playing {args.game} using {"cpu" if arguments.cpu else "gpu"}')
     env = wrap_deepmind(make_atari(env_id=arguments.game), frame_stack=True)
     agent = DeepLearningAgent(observation_space=env.observation_space,
                               action_space=int(env.action_space.n),
                               n_envs=1,  # While playing, one environment at the time
                               n_steps=1,  # Dummy value, we are not training
-                              model_path=arguments.model)
+                              model_path=arguments.model,
+                              use_cpu=arguments.cpu)
     # This is the current state (or observation)
     observations = reshape_observations_single_env(env.reset())
     actions = agent.get_action(observations, play=False)
@@ -58,6 +59,7 @@ if __name__ == '__main__':
                         required=False)
     parser.add_argument('--game', type=str, help='Environment ID of the game', default="BreakoutNoFrameskip-v4",
                         required=False)
+    parser.add_argument('--cpu', help='Use CPU for computation', action='store_true')
 
     args = parser.parse_args()
     main(args)

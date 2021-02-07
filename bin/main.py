@@ -51,7 +51,7 @@ def main(arguments: argparse) -> None:
     n_steps = arguments.steps
     n_agents = arguments.envs
 
-    print(f'Training {args.game}')
+    print(f'Training {args.game} using {"cpu" if arguments.cpu else "gpu"}')
     print(f'Number of concurrent environments {args.envs}')
     print(f'Number of steps per batch {args.steps}')
 
@@ -63,7 +63,8 @@ def main(arguments: argparse) -> None:
                               action_space=int(env.action_space.n),
                               n_envs=n_agents,
                               n_steps=n_steps,
-                              model_path=arguments.model)
+                              model_path=arguments.model,
+                              use_cpu=arguments.cpu)
 
     # This is the current state (or observation)
     observations = reshape_observations(env.reset())
@@ -102,6 +103,6 @@ if __name__ == '__main__':
                         required=False)
     parser.add_argument('--game', type=str, help='Environment ID of the game', default="BreakoutNoFrameskip-v4",
                         required=False)
-
+    parser.add_argument('--cpu', help='Use CPU for computation', action='store_true')
     args = parser.parse_args()
     main(args)

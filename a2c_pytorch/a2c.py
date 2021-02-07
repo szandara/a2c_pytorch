@@ -43,7 +43,8 @@ class DeepLearningAgent:
                  gradient_clip_max: float = 0.5,
                  gamma: float = 0.99,
                  learning_rate: float = 3e-4,
-                 model_path: str = None):
+                 model_path: str = None,
+                 use_cpu: bool = False):
         """
         :param observation_space: size of the input data
         :param action_space: number of possible actions
@@ -53,7 +54,12 @@ class DeepLearningAgent:
         :param model_path: existing model which can be used as starting point for training or replaying
         """
         self._image_size = observation_space.shape
-        self._device = torch.device("cuda:0")
+
+        if use_cpu:
+            self._device = torch.device("cpu:0")
+        else:
+            self._device = torch.device("cuda:0")
+
         self._gamma = gamma
         self._ent_coeff = ent_coeff
         self._value_coeff = value_coeff
@@ -69,7 +75,7 @@ class DeepLearningAgent:
 
         self._epsilon = 1
 
-        self._model = CNN(num_actions=self._action_space).cuda()
+        self._model = CNN(num_actions=self._action_space).to(self._device)
         if model_path:
             self._model.load_state_dict(torch.load(model_path))
 
@@ -92,7 +98,7 @@ class DeepLearningAgent:
         :return: output of the fully connected network flattened
                  batch_size x convolution_output
         """
-        x_tensor = state.cuda()
+        x_tensor = state.to(self._device)
         value, policy = self._model(x_tensor)
         return value, policy
 
@@ -137,7 +143,7 @@ class DeepLearningAgent:
         """
 
         # Collect the latest values
-        s_next_tensor = s_next.cuda()
+        s_next_tensor = s_next.to(self._device)
         next_values, _ = self._model(s_next_tensor)
 
         prepared_data = self._calculate_rewards_and_stack_data(steps=steps,
@@ -154,7 +160,7 @@ class DeepLearningAgent:
         batch_actions = batch_actions.squeeze()
 
         # Actor/Critic values of the given batch
-        batch_values, batch_policies = self._model(states.cuda())
+        batch_values, batch_policies = self._model(states.to(self._device))
         batch_values = batch_values.squeeze()
 
         # Calculate the  loss as in https://arxiv.org/pdf/1602.01783.pdf
@@ -202,8 +208,8 @@ class DeepLearningAgent:
         :param step: step index in frames
         """
 
-        rewards = torch.from_numpy(r).float().unsqueeze(1).cuda()
-        masks = (1. - torch.from_numpy(np.array(done, dtype=np.float32))).unsqueeze(1).cuda()
+        rewards = torch.from_numpy(r).float().unsqueeze(1).to(self._device)
+        masks = (1. - torch.from_numpy(np.array(done, dtype=np.float32))).unsqueeze(1).to(self._device)
 
         self._steps.append(Episode(rewards=rewards,
                                    masks=masks,
